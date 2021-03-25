@@ -77,7 +77,7 @@ $res_data = $mysqli->query($new_sql);
                                         echo "<th>Email</th>";
                                         echo "<th>Task</th>";
                                         echo "<th>Action</th>";
-
+                                        echo "<th>Done/ Not Done</th>";
                                     echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
@@ -89,16 +89,20 @@ $res_data = $mysqli->query($new_sql);
                                         echo "<td>" . $crow['task'] . "</td>";
                                         echo "<td>";
                                             echo '<a href="views/read_view.php?id='. $crow['id'] .'" class="mr-3" title="View Task" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                                          
+                                            echo '<a href="views/update_view.php?id='. $crow['id'] .'" class="mr-3" title="Update Task" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>';
                                             echo '<a href="views/delete_view.php?id='. $crow['id'] .'" title="Delete Task" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
                                         echo "</td>";
+
+                                        echo "<td>";
+                                        echo '<input type="checkbox">';
+                                        echo "</td>";
+
 
 
                                     echo "</tr>";
                                 }
                                 echo "</tbody>";
                             echo "</table>";
-
 
                     $mysqli->close();
                     ?>

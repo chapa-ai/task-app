@@ -113,7 +113,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                 <div class="col-md-12">
                     <h2 class="mt-5">Update Task</h2>
                     <p>Please edit the input values and submit to update the task.</p>
-                    <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
+                    <form action="<?php echo htmlspecialchars(basename($_SERVER['HTTP_REFERER'])); ?>" method="post">
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" name="name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $name; ?>">
@@ -131,7 +131,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         </div>
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="../view.php" class="btn btn-secondary ml-2">Cancel</a>
+                      <a href="<?php echo $_SERVER['HTTP_REFERER'] ?>" class="btn btn-secondary ml-2">Cancel</a>
+
                     </form>
                 </div>
             </div>
