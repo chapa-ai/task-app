@@ -26,6 +26,8 @@
 
 <?php
 
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 require_once "config.php";
 
 if (isset($_GET['pageno'])) {
@@ -57,55 +59,106 @@ $res_data = $mysqli->query($new_sql);
 
 
 <body>
-    <div class="wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="mt-5 mb-3 clearfix">
-                        <h2 class="pull-left">Tasks Details</h2>
-                        <a href="views/create_view.php" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Add New Tasks</a>
-                    </div>
 
-                    <?php
-                    require_once "config.php";
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Sort by name
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="all"? " active":"") ?>" href="view.php?page=all">All</a>
+    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="anton"? " active":"") ?>" href="view.php?page=anton">Anton</a>
+    <a  class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="fedor"? " active":"") ?>" href="view.php?page=fedor">Fedor</a>
+  </div>
+</div>
 
-                            echo '<table class="table table-bordered table-striped">';
-                                echo "<thead>";
-                                    echo "<tr>";
-                                        echo "<th>#</th>";
-                                        echo "<th>Name</th>";
-                                        echo "<th>Email</th>";
-                                        echo "<th>Task</th>";
-                                        echo "<th>Action</th>";
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Sort by email
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="all_email"? " active":"") ?>" href="view.php?page=all_email">All</a>
+    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="anton_email"? " active":"") ?>" href="view.php?page=anton_email">Anton</a>
+    <a  class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="fedor_email"? " active":"") ?>" href="view.php?page=fedor_email">Fedor</a>
+  </div>
+</div>
 
-                                    echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-                                while($crow = $res_data->fetch_array()){
-                                    echo "<tr>";
-                                        echo "<td>" . $crow['id'] . "</td>";
-                                        echo "<td>" . $crow['name'] . "</td>";
-                                        echo "<td>" . $crow['email'] . "</td>";
-                                        echo "<td>" . $crow['task'] . "</td>";
-                                        echo "<td>";
-                                            echo '<a href="views/read_view.php?id='. $crow['id'] .'" class="mr-3" title="View Task" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                                          
-                                            echo '<a href="views/delete_view.php?id='. $crow['id'] .'" title="Delete Task" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
-                                        echo "</td>";
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Sort by status
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="0"? " active":"") ?>" href="view.php?page=all_email">0</a>
+    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="1"? " active":"") ?>" href="view.php?page=anton_email">1</a>
+    <a  class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="2"? " active":"") ?>" href="view.php?page=fedor_email">2</a>
+  </div>
+</div>
 
 
-                                    echo "</tr>";
-                                }
-                                echo "</tbody>";
-                            echo "</table>";
+  <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+          <?php
+          if (isset($_GET['page'])){
+            switch ($_GET['page']) {
 
+              case 'all':
+                $res_data = $mysqli->query("SELECT * FROM tasks");
+                include 'new.php';
+                break;
 
-                    $mysqli->close();
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
+             case 'anton':
+               $res_data = $mysqli->query("SELECT * FROM tasks WHERE name = 'Anton'");
+               include 'new.php';
+                break;
+
+              case 'fedor':
+                $res_data = $mysqli->query("SELECT * FROM tasks WHERE name = 'Fedor'");
+                include 'new.php';
+                break;
+
+/* Sort by e-mail below  */
+
+case 'all_email':
+
+  $res_data = $mysqli->query("SELECT * FROM tasks");
+  include 'new.php';
+break;
+
+case 'anton_email':
+
+  $res_data = $mysqli->query("SELECT * FROM tasks WHERE email = 'anton.chaplygin00@mail.ru'");
+  include 'new.php';
+break;
+?>
+
+<?php
+case 'fedor_email':
+
+  $res_data = $mysqli->query("SELECT * FROM tasks WHERE email = 'fedor_iv@gmail.com'");
+  include 'new.php';
+  break;
+
+  /*  Sort by status below */
+  case '0':
+    $res_data = $mysqli->query("SELECT * FROM tasks WHERE status = 0");
+    include 'new.php';
+    break;
+
+ case '1':
+   $res_data = $mysqli->query("SELECT * FROM tasks WHERE status = 1");
+   include 'new.php';
+    break;
+
+  case '2':
+    $res_data = $mysqli->query("SELECT * FROM tasks WHERE status = 2");
+    include 'new.php';
+    break;
+
+      default:
+      break;
+      }
+
+  }
+      ?>
+        </main>
 
     <ul class="pagination" style="position: relative; left: 600px;">
           <li style="position: relative; right: 100px;"><a href="?pageno=1">First</a></li>

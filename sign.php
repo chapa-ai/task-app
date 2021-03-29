@@ -8,9 +8,10 @@ require "config.php";
 
 $status = 0;
 
+//if($_SERVER['REQUEST_METHOD'] == 'POST') {
 if(isset($_POST['login']) && isset($_POST['password'])){
 
-  $sql = "SELECT * FROM signin WHERE login = ' ".$_POST['login']." '";
+  $sql = "SELECT * FROM signin WHERE login = ' ".$_POST['login']."'";
   $result = $mysqli->query($sql);
 
   var_dump($result);
@@ -37,12 +38,9 @@ if(isset($_POST['login']) && isset($_POST['password'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mapservice</title>
-    <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/sign.css" rel="stylesheet">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
   </head>
       <?php
