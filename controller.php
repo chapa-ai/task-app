@@ -1,4 +1,8 @@
 <?php
+require 'model.php';
+
+
+
 if(isset($_GET['action'])){
   switch ($_GET['action']) {
 

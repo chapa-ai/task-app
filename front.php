@@ -1,3 +1,6 @@
+<?php
+require_once 'model.php';
+?>
 <div class="wrapper">
 <div class="container-fluid">
 <div class="row">
@@ -20,15 +23,17 @@
           echo "</tr>";
       echo "</thead>";
       echo "<tbody>";
-      while($crow = $res_data->fetch_array()){
+      foreach($res_data as $crow){
           echo "<tr>";
               echo "<td>" . $crow['id'] . "</td>";
               echo "<td>" . $crow['name'] . "</td>";
               echo "<td>" . $crow['email'] . "</td>";
               echo "<td>" . $crow['task'] . "</td>";
               echo "<td>";
-                  echo '<a href="views/read_view.php?id='. $crow['id'] .'" class="mr-3" title="View Task" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                  echo '<a href="views/delete_view.php?id='. $crow['id'] .'" title="Delete Task" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
+        
+            echo '<a href="?action=read_object?id='. $crow['id'] .'" class="mr-3" title="View Task" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
+            echo '<a href="views/read_view.php?id='. $crow['id'] .'" class="mr-3" title="View Task" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
+            echo '<a href="views/delete_view.php?id='. $crow['id'] .'" title="Delete Task" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
               echo "</td>";
           echo "</tr>";
       }

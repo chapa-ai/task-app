@@ -1,5 +1,5 @@
 <?php
-/*
+
 if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "../config.php";
     $sql = "SELECT * FROM tasks WHERE id = ?";
@@ -18,9 +18,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 $name = $row["name"];
                 $address = $row["email"];
                 $salary = $row["task"];
-            } else{
-                header("location: error.php");
-                exit();
+
             }
 
         } else{
@@ -35,7 +33,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     header("location: error.php");
     exit();
 }
-*/
+
 ?>
 
 <!DOCTYPE html>

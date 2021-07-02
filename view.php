@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        .wrapper{
-            width: 600px;
-            margin: 0 auto;
-        }
-        table tr td:last-child{
+ <meta charset="UTF-8">
+ <title>Dashboard</title>
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ <style>
+    .wrapper{
+      width: 600px;
+      margin: 0 auto;
+      }
+       table tr td:last-child{
             width: 120px;
-        }
+      }
     </style>
     <script>
         $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 </head>
 
 <?php
 
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
-require_once "config.php";
+require_once "model.php";
 
 if (isset($_GET['pageno'])) {
 
   $pageno = $_GET['pageno'];
 } else {
-
   $pageno = 1;
 }
 
@@ -54,7 +51,6 @@ $new_sql = "SELECT * FROM tasks LIMIT $offset, $size_page";
 
 $res_data = $mysqli->query($new_sql);
 
-
 ?>
 
 
@@ -65,9 +61,9 @@ $res_data = $mysqli->query($new_sql);
     Sort by name
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="all"? " active":"") ?>" href="view.php?page=all">All</a>
-    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="anton"? " active":"") ?>" href="view.php?page=anton">Anton</a>
-    <a  class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="fedor"? " active":"") ?>" href="view.php?page=fedor">Fedor</a>
+    <a class="dropdown-item"  class="nav-link<?php echo(isset($_GET['page']) and $_GET['page'] == "all"? " active":"") ?>" href="view.php?page=filter_by_name&name=all">All</a>
+    <a class="dropdown-item"  class="nav-link<?php echo(isset($_GET['page'])=="anton"? " active":"") ?>" href="view.php?page=filter_by_name&name=anton">Anton</a>
+    <a  class="dropdown-item"  class="nav-link<?php echo(isset($_GET['page'])=="fedor"? " active":"") ?>" href="view.php?page=filter_by_name&name=fedor">Fedor</a>
   </div>
 </div>
 
@@ -76,9 +72,9 @@ $res_data = $mysqli->query($new_sql);
     Sort by email
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="all_email"? " active":"") ?>" href="view.php?page=all_email">All</a>
-    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="anton_email"? " active":"") ?>" href="view.php?page=anton_email">Anton</a>
-    <a  class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="fedor_email"? " active":"") ?>" href="view.php?page=fedor_email">Fedor</a>
+    <a class="dropdown-item"  class="nav-link<?php echo(isset($_GET['page'])=="all_email"? " active":"") ?>" href="view.php?page=filter_by_email&email=all">All</a>
+    <a class="dropdown-item"  class="nav-link<?php echo(isset($_GET['page'])=="anton_email"? " active":"") ?>" href="view.php?page=filter_by_email&email=anton.chaplygin00@mail.ru">Anton</a>
+    <a  class="dropdown-item"  class="nav-link<?php echo(isset($_GET['page'])=="fedor_email"? " active":"") ?>" href="view.php?page=filter_by_email&email=fedor_iv@gmail.com">Fedor</a>
   </div>
 </div>
 
@@ -87,76 +83,42 @@ $res_data = $mysqli->query($new_sql);
     Sort by status
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="0"? " active":"") ?>" href="view.php?page=all_email">0</a>
-    <a class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="1"? " active":"") ?>" href="view.php?page=anton_email">1</a>
-    <a  class="dropdown-item"  class="nav-link<?php echo($_GET['page']=="2"? " active":"") ?>" href="view.php?page=fedor_email">2</a>
+   <a class="dropdown-item"  class="nav-link<?php echo(isset($_GET['page'])=="0"? " active":"") ?>" href="view.php?page=filter_by_status&status=0">0</a>
+   <a class="dropdown-item"  class="nav-link<?php echo(isset($_GET['page'])=="1"? " active":"") ?>" href="view.php?page=filter_by_status&status=1">1</a>
+   <a class="dropdown-item"  class="nav-link<?php echo(isset($_GET['page'])=="2"? " active":"") ?>" href="view.php?page=filter_by_status&status=2">2</a>
+
   </div>
 </div>
 
+<main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+ <?php
+  if (isset($_GET['page'])){
+   $db = new Model();
 
-  <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          <?php
-          if (isset($_GET['page'])){
-            switch ($_GET['page']) {
+   switch ($_GET['page']) {
 
-              case 'all':
-                $res_data = $mysqli->query("SELECT * FROM tasks");
-                include 'new.php';
-                break;
-
-             case 'anton':
-               $res_data = $mysqli->query("SELECT * FROM tasks WHERE name = 'Anton'");
-               include 'new.php';
-                break;
-
-              case 'fedor':
-                $res_data = $mysqli->query("SELECT * FROM tasks WHERE name = 'Fedor'");
-                include 'new.php';
-                break;
-
-/* Sort by e-mail below  */
-
-case 'all_email':
-
-  $res_data = $mysqli->query("SELECT * FROM tasks");
-  include 'new.php';
-break;
-
-case 'anton_email':
-
-  $res_data = $mysqli->query("SELECT * FROM tasks WHERE email = 'anton.chaplygin00@mail.ru'");
-  include 'new.php';
-break;
-?>
-
-<?php
-case 'fedor_email':
-
-  $res_data = $mysqli->query("SELECT * FROM tasks WHERE email = 'fedor_iv@gmail.com'");
-  include 'new.php';
-  break;
-
-  /*  Sort by status below */
-  case '0':
-    $res_data = $mysqli->query("SELECT * FROM tasks WHERE status = 0");
-    include 'new.php';
-    break;
-
- case '1':
-   $res_data = $mysqli->query("SELECT * FROM tasks WHERE status = 1");
-   include 'new.php';
-    break;
-
-  case '2':
-    $res_data = $mysqli->query("SELECT * FROM tasks WHERE status = 2");
-    include 'new.php';
-    break;
-
-      default:
+      /*  Sort by status below */
+      case 'filter_by_status':
+       $res_data = $db->status($_GET['status']);
       break;
-      }
 
-  }
+      case 'filter_by_name':
+       $res_data = $db->name($_GET['name']);
+      break;
+
+      case 'filter_by_email':
+       $res_data = $db->email($_GET['email']);
+      break;
+
+      case 'read_object':
+      $res_data = $db->read_object();
+      break;
+
+     default:
+     break;
+}   }
+
+include 'front.php';
       ?>
         </main>
 
